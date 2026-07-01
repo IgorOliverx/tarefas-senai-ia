@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 06 — IA na Prática</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
+
+  <!-- ===== HEADER ===== -->
+  <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-20">
+    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div>
+        <p class="text-xs font-semibold tracking-widest uppercase text-indigo-500 dark:text-indigo-400">SENAI · Turma IA GEN</p>
+        <h1 class="text-lg font-bold leading-tight">Aula 06 — IA na Prática</h1>
+      </div>
+      <button
+        id="btn-tema"
+        aria-label="Alternar entre tema claro e escuro"
+        class="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-lg"
+      >
+        <span id="icone-tema" aria-hidden="true">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 py-12 space-y-20">
+
+    <!-- ===== SCRIPT 1 — TOGGLE DE TEMA ===== -->
+    <section id="script-1" aria-labelledby="titulo-script-1">
+      <header class="mb-6">
+        <span class="text-xs font-bold tracking-widest uppercase text-indigo-500 dark:text-indigo-400">Script 1</span>
+        <h2 id="titulo-script-1" class="text-2xl font-bold mt-1">Toggle de Tema</h2>
+        <p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">
+          Alterna entre tema claro e escuro, persiste a escolha e atualiza o ícone no cabeçalho.
+        </p>
+      </header>
+
+      <div class="rounded-xl border border-dashed border-indigo-300 dark:border-indigo-700 bg-indigo-50 dark:bg-indigo-950/40 p-6 text-center">
+        <p class="text-indigo-600 dark:text-indigo-300 font-medium">O controle deste script é o botão <span class="font-mono bg-indigo-100 dark:bg-indigo-900 px-2 py-0.5 rounded">#btn-tema</span> no cabeçalho.</p>
+        <p class="text-sm text-indigo-400 dark:text-indigo-500 mt-2">Clique nele para ver o efeito após implementar o script.</p>
+      </div>
+    </section>
+
+    <!-- ===== SCRIPT 2 — LISTA DE TAREFAS ===== -->
+    <section id="script-2" aria-labelledby="titulo-script-2">
+      <header class="mb-6">
+        <span class="text-xs font-bold tracking-widest uppercase text-indigo-500 dark:text-indigo-400">Script 2</span>
+        <h2 id="titulo-script-2" class="text-2xl font-bold mt-1">Lista de Tarefas</h2>
+        <p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">
+          Adicione, conclua e remova tarefas. O contador e os dados persistem no localStorage.
+        </p>
+      </header>
+
+      <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 space-y-5">
+
+        <!-- Input de nova tarefa -->
+        <div class="flex gap-3">
+          <input
+            type="text"
+            id="input-tarefa"
+            placeholder="Digite uma nova tarefa..."
+            aria-label="Nova tarefa"
+            class="flex-1 px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          >
+          <button
+            id="btn-adicionar"
+            aria-label="Adicionar tarefa"
+            class="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition-colors"
+          >
+            Adicionar
+          </button>
+        </div>
+
+        <!-- Contador -->
+        <p id="contador-pendentes" class="text-sm text-gray-500 dark:text-gray-400">
+          0 tarefas pendentes
+        </p>
+
+        <!-- Lista de tarefas -->
+        <ul
+          id="lista-tarefas"
+          aria-label="Lista de tarefas"
+          class="space-y-2 min-h-[60px]"
+        >
+          <!-- Itens adicionados pelo script2.js -->
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- ===== SCRIPT 3 — BUSCA EM TEMPO REAL ===== -->
+    <section id="script-3" aria-labelledby="titulo-script-3">
+      <header class="mb-6">
+        <span class="text-xs font-bold tracking-widest uppercase text-indigo-500 dark:text-indigo-400">Script 3</span>
+        <h2 id="titulo-script-3" class="text-2xl font-bold mt-1">Busca em Tempo Real</h2>
+        <p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">
+          Filtra os cards de produtos enquanto o usuário digita, buscando em nome e descrição.
+        </p>
+      </header>
+
+      <!-- Campo de busca -->
+      <div class="mb-6">
+        <input
+          type="search"
+          id="input-busca"
+          placeholder="Buscar produto por nome ou descrição..."
+          aria-label="Buscar produto"
+          class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+        >
+      </div>
+
+      <!-- Mensagem sem resultado -->
+      <p
+        id="msg-sem-resultado"
+        class="hidden text-center text-gray-400 dark:text-gray-500 py-8 text-sm"
+        aria-live="polite"
+      >
+        Nenhum produto encontrado para essa busca.
+      </p>
+
+      <!-- Grid de produtos -->
+      <div
+        id="grid-produtos"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+        aria-label="Lista de produtos"
+      >
+
+        <article class="card-produto bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 flex flex-col gap-2" data-nome="iPhone 15 Pro" data-descricao="Smartphone com câmera de 48MP e chip A17 Pro">
+          <span class="self-start text-xs font-semibold bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full">Tecnologia</span>
+          <h3 class="font-semibold text-sm mt-1">iPhone 15 Pro</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 flex-1">Smartphone com câmera de 48MP e chip A17 Pro</p>
+          <p class="text-sm font-bold text-emerald-600 dark:text-emerald-400">R$ 7.999</p>
+        </article>
+
+        <article class="card-produto bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 flex flex-col gap-2" data-nome="Notebook Dell XPS" data-descricao="Laptop ultrafino com Intel Core i7 e tela OLED">
+          <span class="self-start text-xs font-semibold bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full">Tecnologia</span>
+          <h3 class="font-semibold text-sm mt-1">Notebook Dell XPS</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 flex-1">Laptop ultrafino com Intel Core i7 e tela OLED</p>
+          <p class="text-sm font-bold text-emerald-600 dark:text-emerald-400">R$ 5.499</p>
+        </article>
+
+        <article class="card-produto bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 flex flex-col gap-2" data-nome="Fone Sony WH-1000XM5" data-descricao="Fone bluetooth com cancelamento de ruído ativo">
+          <span class="self-start text-xs font-semibold bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full">Tecnologia</span>
+          <h3 class="font-semibold text-sm mt-1">Fone Sony WH-1000XM5</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 flex-1">Fone bluetooth com cancelamento de ruído ativo</p>
+          <p class="text-sm font-bold text-emerald-600 dark:text-emerald-400">R$ 1.899</p>
+        </article>
+
+        <article class="card-produto bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 flex flex-col gap-2" data-nome="Clean Code" data-descricao="Boas práticas de programação por Robert Martin">
+          <span class="self-start text-xs font-semibold bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-full">Livros</span>
+          <h3 class="font-semibold text-sm mt-1">Clean Code</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 flex-1">Boas práticas de programação por Robert Martin</p>
+          <p class="text-sm font-bold text-emerald-600 dark:text-emerald-400">R$ 89</p>
+        </article>
+
+        <article class="card-produto bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 flex flex-col gap-2" data-nome="O Programador Pragmático" data-descricao="Guia essencial para desenvolvedores modernos">
+          <span class="self-start text-xs font-semibold bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-full">Livros</span>
+          <h3 class="font-semibold text-sm mt-1">O Programador Pragmático</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 flex-1">Guia essencial para desenvolvedores modernos</p>
+          <p class="text-sm font-bold text-emerald-600 dark:text-emerald-400">R$ 79</p>
+        </article>
+
+        <article class="card-produto bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 flex flex-col gap-2" data-nome="Design Patterns" data-descricao="Padrões de projeto para software orientado a objetos">
+          <span class="self-start text-xs font-semibold bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-full">Livros</span>
+          <h3 class="font-semibold text-sm mt-1">Design Patterns</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 flex-1">Padrões de projeto para software orientado a objetos</p>
+          <p class="text-sm font-bold text-emerald-600 dark:text-emerald-400">R$ 95</p>
+        </article>
+
+        <article class="card-produto bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 flex flex-col gap-2" data-nome="Air Fryer Philips" data-descricao="Fritadeira sem óleo com capacidade de 4,1 litros">
+          <span class="self-start text-xs font-semibold bg-rose-100 dark:bg-rose-900 text-rose-700 dark:text-rose-300 px-2 py-0.5 rounded-full">Cozinha</span>
+          <h3 class="font-semibold text-sm mt-1">Air Fryer Philips</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 flex-1">Fritadeira sem óleo com capacidade de 4,1 litros</p>
+          <p class="text-sm font-bold text-emerald-600 dark:text-emerald-400">R$ 699</p>
+        </article>
+
+        <article class="card-produto bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 flex flex-col gap-2" data-nome="Cafeteira Nespresso" data-descricao="Máquina de café expresso com sistema de cápsulas">
+          <span class="self-start text-xs font-semibold bg-rose-100 dark:bg-rose-900 text-rose-700 dark:text-rose-300 px-2 py-0.5 rounded-full">Cozinha</span>
+          <h3 class="font-semibold text-sm mt-1">Cafeteira Nespresso</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 flex-1">Máquina de café expresso com sistema de cápsulas</p>
+          <p class="text-sm font-bold text-emerald-600 dark:text-emerald-400">R$ 799</p>
+        </article>
+
+        <article class="card-produto bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 flex flex-col gap-2" data-nome="Tênis Nike Air Max" data-descricao="Tênis para corrida com amortecimento avançado">
+          <span class="self-start text-xs font-semibold bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-0.5 rounded-full">Esportes</span>
+          <h3 class="font-semibold text-sm mt-1">Tênis Nike Air Max</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 flex-1">Tênis para corrida com amortecimento avançado</p>
+          <p class="text-sm font-bold text-emerald-600 dark:text-emerald-400">R$ 599</p>
+        </article>
+
+        <article class="card-produto bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 flex flex-col gap-2" data-nome="Mochila Osprey Talon" data-descricao="Mochila de trilha resistente com 30 litros de capacidade">
+          <span class="self-start text-xs font-semibold bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-0.5 rounded-full">Esportes</span>
+          <h3 class="font-semibold text-sm mt-1">Mochila Osprey Talon</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 flex-1">Mochila de trilha resistente com 30 litros de capacidade</p>
+          <p class="text-sm font-bold text-emerald-600 dark:text-emerald-400">R$ 449</p>
+        </article>
+
+        <article class="card-produto bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 flex flex-col gap-2" data-nome="Camiseta Levi's Original" data-descricao="Camiseta de algodão premium com logo clássico">
+          <span class="self-start text-xs font-semibold bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded-full">Moda</span>
+          <h3 class="font-semibold text-sm mt-1">Camiseta Levi's Original</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 flex-1">Camiseta de algodão premium com logo clássico</p>
+          <p class="text-sm font-bold text-emerald-600 dark:text-emerald-400">R$ 129</p>
+        </article>
+
+        <article class="card-produto bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 flex flex-col gap-2" data-nome="Óculos Ray-Ban Wayfarer" data-descricao="Óculos de sol clássico com lentes polarizadas">
+          <span class="self-start text-xs font-semibold bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded-full">Moda</span>
+          <h3 class="font-semibold text-sm mt-1">Óculos Ray-Ban Wayfarer</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 flex-1">Óculos de sol clássico com lentes polarizadas</p>
+          <p class="text-sm font-bold text-emerald-600 dark:text-emerald-400">R$ 599</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== SCRIPT 4 — CRONÔMETRO POMODORO ===== -->
+    <section id="script-4" aria-labelledby="titulo-script-4">
+      <header class="mb-6">
+        <span class="text-xs font-bold tracking-widest uppercase text-indigo-500 dark:text-indigo-400">Script 4</span>
+        <h2 id="titulo-script-4" class="text-2xl font-bold mt-1">Cronômetro Pomodoro</h2>
+        <p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">
+          Contagem regressiva configurável, com pausa sem zerar e aviso ao chegar em zero.
+        </p>
+      </header>
+
+      <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8 flex flex-col items-center gap-6">
+
+        <!-- Display do tempo -->
+        <p
+          id="display-tempo"
+          aria-label="Tempo restante"
+          aria-live="polite"
+          class="text-7xl font-mono font-bold tracking-tight tabular-nums text-indigo-600 dark:text-indigo-400"
+        >
+          25:00
+        </p>
+
+        <!-- Input de minutos -->
+        <div class="flex items-center gap-3">
+          <label for="input-minutos" class="text-sm text-gray-500 dark:text-gray-400">Duração (min):</label>
+          <input
+            type="number"
+            id="input-minutos"
+            value="25"
+            min="1"
+            max="99"
+            aria-label="Duração em minutos"
+            class="w-20 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-center text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          >
+        </div>
+
+        <!-- Botões de controle -->
+        <div class="flex gap-3" role="group" aria-label="Controles do cronômetro">
+          <button
+            id="btn-start"
+            aria-label="Iniciar cronômetro"
+            class="px-6 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition-colors"
+          >
+            Start
+          </button>
+          <button
+            id="btn-pause"
+            aria-label="Pausar cronômetro"
+            class="px-6 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold transition-colors"
+          >
+            Pause
+          </button>
+          <button
+            id="btn-reset"
+            aria-label="Resetar cronômetro"
+            class="px-6 py-2.5 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 text-sm font-semibold transition-colors"
+          >
+            Reset
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== SCRIPT 5 — CONSULTA DE CEP ===== -->
+    <section id="script-5" aria-labelledby="titulo-script-5">
+      <header class="mb-6">
+        <span class="text-xs font-bold tracking-widest uppercase text-indigo-500 dark:text-indigo-400">Script 5</span>
+        <h2 id="titulo-script-5" class="text-2xl font-bold mt-1">Consulta de CEP</h2>
+        <p class="text-gray-500 dark:text-gray-400 mt-1 text-sm">
+          Consulta o endereço via API ViaCEP com máscara automática e tratamento de erros.
+        </p>
+      </header>
+
+      <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 space-y-5">
+
+        <!-- Input de CEP + botão -->
+        <div class="flex gap-3">
+          <input
+            type="text"
+            id="input-cep"
+            placeholder="00000-000"
+            maxlength="9"
+            inputmode="numeric"
+            aria-label="CEP para consulta"
+            class="flex-1 px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-sm font-mono tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          >
+          <button
+            id="btn-buscar"
+            aria-label="Buscar endereço pelo CEP"
+            class="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition-colors"
+          >
+            Buscar
+          </button>
+        </div>
+
+        <!-- Área de resultado -->
+        <div
+          id="resultado-cep"
+          aria-live="polite"
+          aria-atomic="true"
+          class="min-h-[80px] rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 text-sm text-gray-400 dark:text-gray-500 flex items-center justify-center"
+        >
+          O endereço aparece aqui após a busca.
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== RODAPÉ ===== -->
+  <footer class="mt-20 border-t border-gray-200 dark:border-gray-800">
+    <div class="max-w-3xl mx-auto px-6 py-8 text-center text-xs text-gray-400 dark:text-gray-600">
+      Aula 06 · SENAI · Turma IA GEN — Todos os direitos reservados
+    </div>
+  </footer>
+
+  <script src="script1.js"></script>
+  <script src="script2.js"></script>
+  <script src="script3.js"></script>
+  <script src="script4.js"></script>
+  <script src="script5.js"></script>
+
+</body>
+</html>
